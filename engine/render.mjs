@@ -12,8 +12,9 @@ const spec = JSON.parse(readFileSync(specPath, 'utf8'));
 const FPS = 24;
 
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#fff}</style></head><body>
-<script>${readFileSync(resolve(here, 'engine.js'), 'utf8')}</script>
-<script>${readFileSync(resolve(here, 'scene.js'), 'utf8')}</script></body></html>`;
+${spec.template === 'motion'
+  ? `<script>${readFileSync(resolve(here, 'motion.js'), 'utf8')}</script>`
+  : `<script>${readFileSync(resolve(here, 'engine.js'), 'utf8')}</script><script>${readFileSync(resolve(here, 'scene.js'), 'utf8')}</script>`}</body></html>`;
 
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const page = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
