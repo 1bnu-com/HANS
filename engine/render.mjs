@@ -12,7 +12,9 @@ const spec = JSON.parse(readFileSync(specPath, 'utf8'));
 const FPS = 24;
 
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#fff}</style></head><body>
-${spec.template === 'motion'
+${spec.template === 'story'
+  ? `<script>${readFileSync(resolve(here, 'story.js'), 'utf8')}</script>`
+  : spec.template === 'motion'
   ? `<script>${readFileSync(resolve(here, 'motion.js'), 'utf8')}</script>`
   : `<script>${readFileSync(resolve(here, 'engine.js'), 'utf8')}</script><script>${readFileSync(resolve(here, 'scene.js'), 'utf8')}</script>`}</body></html>`;
 

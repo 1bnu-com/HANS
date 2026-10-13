@@ -1,0 +1,20 @@
+{"template":"story","scenes":[
+ {"type":"hook","dur":3.6,"eyebrow":"Cerita jualan online","text":"Jam 2 pagi ada yang mau beli. Siapa yang balas?","hl":["balas?"],"clock":"02.07",
+  "notifs":[{"from":"Rina","text":"Kak, masih ready? Mau 2 ya"},{"from":"Budi","text":"Bisa kirim hari ini?"}]},
+ {"type":"reveal","dur":2.6,"big":"AI AGENT","sub":"Karyawan digital yang bisa bertindak,","sub2":"bukan cuma menjawab"},
+ {"type":"chat","dur":5.2,"eyebrow":"02.07 · pelanggan chat","title":"Agent balas, cek stok, lalu kirim tagihan","hl":["tagihan"],"name":"Toko Kamu","status":"AI agent · online",
+  "messages":[{"from":"user","text":"Kak, masih ready? Mau 2 ya","at":0.6},{"from":"agent","text":"Ready kak! Saya cek stok dulu ya 🙏","at":1.4},
+   {"from":"agent","text":"Stok aman. Ini tagihannya:","at":2.6,"card":{"title":"INVOICE #1042","sub":"2 pcs · siap dibayar"}}],
+  "actions":[{"at":1.9,"title":"Cek stok","sub":"Spreadsheet gudang"},{"at":3.0,"title":"Buat invoice","sub":"Otomatis terkirim"},{"at":4.0,"title":"Catat order","sub":"Masuk ke CRM","done":true}]},
+ {"type":"chat","dur":4.2,"eyebrow":"Besok pagi","title":"Belum bayar? Agent follow up sendiri","hl":["follow","up"],"name":"Toko Kamu","status":"AI agent · online",
+  "messages":[{"from":"agent","text":"Pagi kak Rina, pesanannya sudah kami siapkan. Mau dikirim hari ini?","at":0.6,"time":"08.00"},{"from":"user","text":"Iya kak, sudah transfer ya","at":1.8},
+   {"from":"agent","text":"Terima kasih! Pembayaran diterima ✓","at":2.6,"time":"08.03","card":{"title":"STATUS: LUNAS","sub":"Resi dikirim jam 10.00","color":"#E3F7EA","tc":"#14A44D"}}],
+  "actions":[{"at":2.9,"title":"Cek mutasi","sub":"Pembayaran cocok","done":true}]},
+ {"type":"compare","dur":3.8,"title":"Chatbot vs AI agent","hl":["agent"],
+  "left":{"title":"Chatbot","tag":"Menjawab","items":["Balas pertanyaan","Ikuti skrip","Berhenti di chat"]},
+  "right":{"title":"AI Agent","tag":"Bertindak","items":["Pakai tools bisnis","Jalankan tugas","Cek hasil sendiri"]}},
+ {"type":"chips","dur":3.8,"eyebrow":"Cara mulai","title":"Mulai dari 1 tugas yang paling sering diulang","hl":["1","tugas"],
+  "items":[{"title":"Balas chat order","sub":"Pertanyaan stok, harga, ongkir"},{"title":"Follow up pembeli","sub":"Yang belum bayar atau belum balas"},{"title":"Rekap pesanan","sub":"Langsung ke spreadsheet"}],
+  "note":"Tetap kamu yang pegang aturan & keputusan akhir."},
+ {"type":"cta","dur":3.2,"text":"Mau punya AI agent untuk bisnismu?","hl":["AI","agent"],"button":"DM @hanscreative.co","sub":"Simpan video ini & kirim ke temanmu"}
+]}
