@@ -32,7 +32,8 @@ if (flag === '--at') {
   console.log('still written', outPath);
 } else {
   const total = Math.round(duration * FPS);
-  const music = resolve(here, 'music.m4a');
+  let music = resolve(here, 'music.m4a');
+  if (spec.template === 'story') { music = outPath + '.audio.wav'; const { execFileSync } = await import('child_process'); execFileSync('python3', [resolve(here, 'audio.py'), specPath, music]); }
   const args = ['-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-'];
   let hasMusic = false;
   try { readFileSync(music); hasMusic = true; } catch {}
@@ -49,6 +50,7 @@ if (flag === '--at') {
   ff.stdin.end();
   const code = await new Promise(r => ff.on('close', r));
   if (code !== 0) { console.error(err.slice(-3000)); process.exit(1); }
+  if (spec.template === 'story') { try { (await import('fs')).unlinkSync(music); } catch {} }
   console.log('video written', outPath, `${((Date.now() - t0) / 1000).toFixed(0)}s`);
 }
 await browser.close();

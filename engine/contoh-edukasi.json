@@ -1,0 +1,16 @@
+{"template":"story","scenes":[
+ {"type":"hook","dur":3.4,"eyebrow":"Edukasi AI","text":"AI agent itu sebenarnya kerjanya gimana?","hl":["agent"],"chips":["Kok bisa kerja sendiri?","Bedanya sama chatbot?","Aman nggak?"]},
+ {"type":"reveal","dur":2.6,"big":"4 BAGIAN","sub":"Anatomi sebuah AI agent","sub2":"Simak sampai habis 👇"},
+ {"type":"anatomy","dur":6.4,"title":"Anatomi AI agent","hl":["agent"],"items":[
+   {"at":0.6,"icon":"brain","title":"Otak","sub":"Model AI yang berpikir dan memutuskan langkah"},
+   {"at":1.9,"icon":"tools","title":"Tangan","sub":"Tools: browsing, email, spreadsheet, aplikasi"},
+   {"at":3.2,"icon":"memory","title":"Ingatan","sub":"Mengingat konteks, data, dan riwayat kerja"},
+   {"at":4.5,"icon":"rules","title":"Aturan","sub":"Instruksi, tujuan, dan batasan dari kamu"}]},
+ {"type":"loop","dur":6.0,"eyebrow":"Cara kerjanya","title":"Berputar sampai tugasnya selesai","hl":["selesai"],
+  "steps":["Pahami tujuan","Susun rencana","Bertindak","Cek hasil"],
+  "example":{"task":"rekap order minggu ini","lines":["Tujuan: rekap semua order 7 hari terakhir","Rencana: buka chat, ambil data, susun tabel","Bertindak: salin order ke spreadsheet","Cek: total cocok? Kalau belum, ulangi"]}},
+ {"type":"chips","dur":4.2,"eyebrow":"Sebelum pakai","title":"3 hal yang wajib kamu siapkan","hl":["3","wajib"],
+  "items":[{"title":"Tujuan yang jelas","sub":"Satu tugas spesifik, bukan semuanya"},{"title":"Akses data & tools","sub":"Hanya yang benar-benar dibutuhkan"},{"title":"Pengawasan manusia","sub":"Cek hasil sebelum dipakai ke pelanggan"}],
+  "note":"AI agent itu asisten, bukan pengganti keputusanmu."},
+ {"type":"cta","dur":3.2,"text":"Mau belajar bikin AI agent sendiri?","hl":["AI","agent"],"button":"DM @hanscreative.co","sub":"Simpan biar nggak lupa & share ke temanmu"}
+]}
