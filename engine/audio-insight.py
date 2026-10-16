@@ -1,7 +1,9 @@
 # Soundtrack for the "insight" template: lo-fi groove (90 bpm, D minor), typing clicks on prompt scenes,
 # shutter thumps at scene changes, soft plucks on items. usage: python3 engine/audio-insight.py spec.json out.wav
 import sys, json, numpy as np, wave
-spec=json.load(open(sys.argv[1]));sc=spec['scenes'];durs=[s['dur'] for s in sc];dur=sum(durs);starts=np.cumsum([0]+durs[:-1])
+spec=json.load(open(sys.argv[1]))
+if spec.get('cover'): spec['scenes']=[{'type':'cover','dur':spec['cover'].get('dur',0.6)}]+spec['scenes']
+sc=spec['scenes'];durs=[s['dur'] for s in sc];dur=sum(durs);starts=np.cumsum([0]+durs[:-1])
 sr=44100;t=np.arange(int(sr*dur))/sr;out=np.zeros_like(t);rng=np.random.default_rng(7)
 bpm=90;beat=60/bpm;bar=beat*4
 chords=[[146.83,174.61,220.0,261.63],[196.0,233.08,293.66,349.23],[233.08,293.66,349.23,440.0],[220.0,277.18,329.63,392.0]];bass=[73.42,98.0,58.27,55.0]

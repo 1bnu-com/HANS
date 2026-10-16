@@ -1,7 +1,9 @@
 # Soundtrack generator for story template: music bed + whoosh at scene changes + optional pops.
 # usage: python3 engine/audio.py spec.json out.wav
 import sys, json, numpy as np, wave
-spec=json.load(open(sys.argv[1]));durs=[s['dur'] for s in spec['scenes']];dur=sum(durs);starts=np.cumsum([0]+durs[:-1])
+spec=json.load(open(sys.argv[1]))
+if spec.get('cover'): spec['scenes']=[{'type':'cover','dur':spec['cover'].get('dur',0.6)}]+spec['scenes']
+durs=[s['dur'] for s in spec['scenes']];dur=sum(durs);starts=np.cumsum([0]+durs[:-1])
 sr=44100;t=np.arange(int(sr*dur))/sr;out=np.zeros_like(t);rng=np.random.default_rng(len(spec['scenes']))
 bpm=104;beat=60/bpm;bar=beat*4
 chords=[[220.0,261.63,329.63],[174.61,220.0,261.63],[261.63,329.63,392.0],[196.0,246.94,293.66]];bass=[55.0,43.65,65.41,49.0]
