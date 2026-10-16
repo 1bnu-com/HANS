@@ -14,6 +14,8 @@ const FPS = 24;
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#fff}</style></head><body>
 ${spec.template === 'story'
   ? `<script>${readFileSync(resolve(here, 'story.js'), 'utf8')}</script>`
+  : spec.template === 'insight'
+  ? `<script>${readFileSync(resolve(here, 'insight.js'), 'utf8')}</script>`
   : spec.template === 'motion'
   ? `<script>${readFileSync(resolve(here, 'motion.js'), 'utf8')}</script>`
   : `<script>${readFileSync(resolve(here, 'engine.js'), 'utf8')}</script><script>${readFileSync(resolve(here, 'scene.js'), 'utf8')}</script>`}</body></html>`;
@@ -33,7 +35,8 @@ if (flag === '--at') {
 } else {
   const total = Math.round(duration * FPS);
   let music = resolve(here, 'music.m4a');
-  if (spec.template === 'story') { music = outPath + '.audio.wav'; const { execFileSync } = await import('child_process'); execFileSync('python3', [resolve(here, 'audio.py'), specPath, music]); }
+  const AUDIO = { story: 'audio.py', insight: 'audio-insight.py' };
+  if (AUDIO[spec.template]) { music = outPath + '.audio.wav'; const { execFileSync } = await import('child_process'); execFileSync('python3', [resolve(here, AUDIO[spec.template]), specPath, music]); }
   const args = ['-y', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-'];
   let hasMusic = false;
   try { readFileSync(music); hasMusic = true; } catch {}
@@ -50,7 +53,7 @@ if (flag === '--at') {
   ff.stdin.end();
   const code = await new Promise(r => ff.on('close', r));
   if (code !== 0) { console.error(err.slice(-3000)); process.exit(1); }
-  if (spec.template === 'story') { try { (await import('fs')).unlinkSync(music); } catch {} }
+  if (AUDIO[spec.template]) { try { (await import('fs')).unlinkSync(music); } catch {} }
   console.log('video written', outPath, `${((Date.now() - t0) / 1000).toFixed(0)}s`);
 }
 await browser.close();
