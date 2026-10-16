@@ -1,0 +1,17 @@
+{"template":"insight","scenes":[
+ {"type":"prompt","dur":3.6,"kicker":"Pernah nanya gini ke diri sendiri?","text":"Kenapa reach akunku turun minggu ini?","title":"Sekarang, tanya ke AI.","hl":["AI."],"chart":{"label":"Reach mingguan","badge":"ILUSTRASI"}},
+ {"type":"statement","dur":3.0,"dark":true,"line1":"Datanya sudah ada.","hl1":["ada."],"line2":"Waktunya yang nggak ada.","foot":"Salin data · bikin grafik · tebak pola"},
+ {"type":"connect","dur":4.4,"eyebrow":"Langkah 1","title":"Sambungkan Claude ke tools analitikmu","hl":["Sambungkan"],"hub":"Claude",
+  "nodes":[{"at":0.7,"icon":"chart","label":"Analitik","sub":"Metrik akun sosmed"},{"at":1.1,"icon":"post","label":"Postingan","sub":"Konten yang tayang"},{"at":1.5,"icon":"cal","label":"Jadwal","sub":"Kalender konten"},{"at":1.9,"icon":"chat","label":"Kamu","sub":"Tanya bahasa biasa"}],
+  "note":"Lewat fitur konektor, sesuai izin aksesmu."},
+ {"type":"dashboard","dur":6.0,"eyebrow":"Langkah 2","title":"Tanya, lalu Claude baca datanya","hl":["baca"],
+  "question":"Format apa yang paling banyak disimpan bulan ini?","who":"Claude","badge":"ILUSTRASI",
+  "barsTitle":"Disimpan per format","bars":[{"label":"Reels","v":0.9,"hot":true},{"label":"Carousel","v":0.65},{"label":"Foto","v":0.35},{"label":"Story","v":0.5}],
+  "heatTitle":"Jam audiens aktif","heat":[7,8],
+  "insights":[{"at":3.0,"text":"Format teratas & topiknya"},{"at":3.6,"text":"Jam posting yang paling ramai"},{"at":4.2,"text":"Ide konten minggu depan"}]},
+ {"type":"stack","dur":4.4,"eyebrow":"Langkah 3","title":"Pertanyaan yang bisa langsung kamu coba","hl":["langsung"],
+  "items":[{"title":"Konten paling disimpan?","sub":"Cari topik yang layak diulang"},{"title":"Jam audiens aktif?","sub":"Atur jadwal posting berikutnya"},{"title":"Kenapa reach turun?","sub":"Bandingkan dengan minggu lalu"}],
+  "note":"Ulangi tiap minggu, polanya makin kelihatan."},
+ {"type":"statement","dur":3.0,"dark":false,"line1":"Data dibaca Claude.","hl1":["Claude."],"line2":"Keputusan tetap di kamu.","foot":"Cek ulang angka sebelum bertindak"},
+ {"type":"cta","dur":3.4,"text":"Mau dibantu setup Claude untuk sosmed-mu?","hl":["Claude"],"button":"DM @hanscreative.co","sub":"Simpan & share ke teman yang kelola sosmed","marquee":"Simpan · Share · DM hanscreative.co"}
+]}
