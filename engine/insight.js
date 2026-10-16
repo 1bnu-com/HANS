@@ -4,7 +4,11 @@
 // types: prompt | statement | connect | dashboard | stack | cta
 (function(){
 const W=1080,H=1920;
-const PAPER='#F3EEE4',PAPER2='#E9E2D4',INK='#141414',INK2='#2A2A2A',OR='#FF5B2E',OR2='#FFB199',MUTE='#7A7468',WHITE='#FFFFFF',NIGHT='#121212';
+// palettes: "hans" (default, brand HANS CREATIVE) | "warm" (cream + orange). Set spec.palette.
+const PALS={hans:{PAPER:'#F5F7FC',PAPER2:'#E6EEFF',INK:'#0C111F',INK2:'#1E2638',OR:'#005CFC',OR2:'#9DBBFF',MUTE:'#58647A',NIGHT:'#0C111F',GLOW:'0,92,252',SOFT:'#BFD3FF',LIGHT:'#6EA2FF'},
+  warm:{PAPER:'#F3EEE4',PAPER2:'#E9E2D4',INK:'#141414',INK2:'#2A2A2A',OR:'#FF5B2E',OR2:'#FFB199',MUTE:'#7A7468',NIGHT:'#121212',GLOW:'255,91,46',SOFT:'#F3D9CF',LIGHT:'#FF5B2E'}};
+let PAPER,PAPER2,INK,INK2,OR,OR2,MUTE,NIGHT,GLOW,SOFT,LIGHT;const WHITE='#FFFFFF';
+function usePal(n){const P=PALS[n]||PALS.hans;({PAPER,PAPER2,INK,INK2,OR,OR2,MUTE,NIGHT,GLOW,SOFT,LIGHT}=P);}usePal('hans');
 const FD='"Inter Display","Inter",sans-serif',FT='"Inter",sans-serif',FS='"Lora",serif',FM='"Liberation Mono","DejaVu Sans Mono",monospace';
 let ctx,cv,S,starts=[],TOTAL=0;
 const cl=(v,a,b)=>Math.max(a,Math.min(b,v)),eo=t=>1-Math.pow(1-cl(t,0,1),3),eio=t=>{t=cl(t,0,1);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;};
@@ -25,10 +29,10 @@ function bgPaper(t){ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);
   // grain
   for(let i=0;i<500;i++){ctx.fillStyle=`rgba(20,20,20,${.03+rnd(i+11)*.05})`;ctx.fillRect(rnd(i)*W,rnd(i+77)*H,2,2);}
   // slow orange sun
-  const x=880+Math.sin(t*.4)*40,y=1660+Math.cos(t*.3)*30;const g=ctx.createRadialGradient(x,y,0,x,y,520);g.addColorStop(0,'rgba(255,91,46,.18)');g.addColorStop(1,'rgba(255,91,46,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+  const x=880+Math.sin(t*.4)*40,y=1660+Math.cos(t*.3)*30;const g=ctx.createRadialGradient(x,y,0,x,y,520);g.addColorStop(0,`rgba(${GLOW},.16)`);g.addColorStop(1,`rgba(${GLOW},0)`);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
 function bgNight(t){ctx.fillStyle=NIGHT;ctx.fillRect(0,0,W,H);
   ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=2;for(let x=0;x<W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=0;y<H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-  const x=540+Math.sin(t*.5)*120,y=900;const g=ctx.createRadialGradient(x,y,0,x,y,700);g.addColorStop(0,'rgba(255,91,46,.22)');g.addColorStop(1,'rgba(255,91,46,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
+  const x=540+Math.sin(t*.5)*120,y=900;const g=ctx.createRadialGradient(x,y,0,x,y,700);g.addColorStop(0,`rgba(${GLOW},.28)`);g.addColorStop(1,`rgba(${GLOW},0)`);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);}
 
 /* ---------- type ---------- */
 // big black headline, highlighted words get an orange marker stroke underneath
@@ -38,13 +42,13 @@ function headline(text,x,y,maxW,size,lt,start,color,hl,opts){opts=opts||{};const
     // line mask reveal (slide up)
     ws.forEach(w=>{const ww=ctx.measureText(w).width;const p=eo((lt-start-k*.06)/.38);k++;if(p<=0){cx+=ww+sp;return;}
       const on=hs.has(norm(w));
-      if(on){const m=eo((lt-start-k*.06-.2)/.35);fr(cx,by+size*.1,ww*m,size*.09,size*.045,opts.mark||(color===INK?INK:OR));}
-      ctx.save();ctx.beginPath();ctx.rect(cx-20,by-size*1.02,ww+40,size*1.3);ctx.clip();ctx.font=f;ctx.fillStyle=on?OR:color;ctx.fillText(w,cx,by+(1-p)*size*1.1);ctx.restore();cx+=ww+sp;});});
+      if(on){const m=eo((lt-start-k*.06-.2)/.35);fr(cx,by+size*.1,ww*m,size*.09,size*.045,opts.mark||(color===INK?INK:LIGHT));}
+      ctx.save();ctx.beginPath();ctx.rect(cx-20,by-size*1.02,ww+40,size*1.3);ctx.clip();ctx.font=f;ctx.fillStyle=on?(color===INK?OR:LIGHT):color;ctx.fillText(w,cx,by+(1-p)*size*1.1);ctx.restore();cx+=ww+sp;});});
   return lines.length*lh;}
 function serif(t,x,y,size,c,al,alpha){ctx.save();if(alpha!=null)ctx.globalAlpha*=alpha;tx(t,x,y,`italic 500 ${size}px ${FS}`,c,al);ctx.restore();}
 function mono(t,x,y,size,c,al,ls){ctx.save();ctx.font=`700 ${size}px ${FM}`;ctx.letterSpacing=(ls||2)+'px';ctx.fillStyle=c;ctx.textAlign=al||'left';ctx.fillText(t,x,y);ctx.restore();}
 function tag(t,x,y,dark){ctx.save();ctx.font=`700 26px ${FM}`;ctx.letterSpacing='4px';const s=t.toUpperCase(),w=ctx.measureText(s).width+48;
-  fr(x,y,w,56,8,dark?OR:INK);ctx.fillStyle=dark?INK:PAPER;ctx.fillText(s,x+24,y+38);ctx.restore();return w;}
+  fr(x,y,w,56,8,dark?OR:INK);ctx.fillStyle=dark?WHITE:PAPER;ctx.fillText(s,x+24,y+38);ctx.restore();return w;}
 
 /* ---------- icons ---------- */
 function icon(kind,cx,cy,s,c){ctx.save();ctx.translate(cx,cy);ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=s*.09;ctx.lineCap='round';ctx.lineJoin='round';
@@ -90,7 +94,7 @@ function sceneStatement(s,lt,d,t){const dark=s.dark!==false;dark?bgNight(t):bgPa
     for(let r=0;r<4;r++)for(let col=0;col<3;col++){st(col*70,r*34,70,34,0,WHITE,2);if(rnd(i*13+r*3+col)>.45)fr(col*70+10,r*34+12,20+rnd(i+r+col)*36,10,4,WHITE);}ctx.restore();}
   const h1=headline(s.line1||'',90,760,900,118,lt,.1,c,s.hl1);
   const q=eo((lt-.9)/.5);ctx.save();ctx.globalAlpha=q;ctx.translate(0,(1-q)*40);
-  const ls=wrap(s.line2||'',900,`italic 600 104px ${FS}`);ls.forEach((l,i)=>tx(l.join(' '),90,780+h1+40+i*116,`italic 600 104px ${FS}`,OR));ctx.restore();
+  const ls=wrap(s.line2||'',900,`italic 600 104px ${FS}`);ls.forEach((l,i)=>tx(l.join(' '),90,780+h1+40+i*116,`italic 600 104px ${FS}`,dark?LIGHT:OR));ctx.restore();
   if(s.foot){const r=eo((lt-1.6)/.4);ctx.save();ctx.globalAlpha=r;mono(s.foot.toUpperCase(),90,1720,28,dark?'rgba(255,255,255,.6)':MUTE,'left',4);ctx.restore();}}
 
 // CONNECT: hub & spoke diagram, packets flow to the hub
@@ -141,7 +145,7 @@ function sceneStack(s,lt,d,t){bgNight(t);tag(s.eyebrow||'',90,300,true);headline
     fr(12,12,900,240,30,OR);fr(0,0,900,240,30,PAPER);st(0,0,900,240,30,INK,5);
     tx(String(i+1).padStart(2,'0'),50,170,`italic 600 140px ${FS}`,OR);
     tx(it.title,250,108,`900 50px ${FD}`,INK);const ls=wrap(it.sub||'',600,`500 32px ${FT}`);ls.slice(0,2).forEach((l,j)=>tx(l.join(' '),250,158+j*40,`500 32px ${FT}`,INK2));ctx.restore();});
-  if(s.note){const r=eo((lt-2.6)/.4);ctx.save();ctx.globalAlpha=r;serif(s.note,540,1700,42,'#F3D9CF','center');ctx.restore();}}
+  if(s.note){const r=eo((lt-2.6)/.4);ctx.save();ctx.globalAlpha=r;serif(s.note,540,1700,42,SOFT,'center');ctx.restore();}}
 
 // CTA: paper, big headline, orange pill, marquee
 function sceneCta(s,lt,d,t){bgPaper(t);const hh=headline(s.text||'',540,720,920,112,lt,.05,INK,s.hl,{center:true});
@@ -163,7 +167,7 @@ function chrome(t,i,dark){const c=dark?'rgba(255,255,255,.85)':INK;const n=S.sce
 function shutter(t){for(let i=1;i<starts.length;i++){const u=(t-starts[i]+.25)/.5;if(u>0&&u<1){const n=6,bw=W/n;for(let k=0;k<n;k++){const v=cl(u*1.6-k*.1,0,1);
   const a=v<.5?eio(v*2):1,b=v<.5?0:eio((v-.5)*2);ctx.fillStyle=k%2?OR:INK;ctx.fillRect(k*bw,b*H,bw+1,(a-b)*H);}}}}
 
-window.setup=async function(spec){S=spec;let a=0;starts=S.scenes.map(s=>{const v=a;a+=s.dur;return v;});TOTAL=a;
+window.setup=async function(spec){S=spec;usePal(spec.palette||'hans');let a=0;starts=S.scenes.map(s=>{const v=a;a+=s.dur;return v;});TOTAL=a;
   await document.fonts.load('900 96px "Inter Display"');await document.fonts.load('700 30px "Inter"');await document.fonts.load('italic 600 60px "Lora"');await document.fonts.load('700 30px "Liberation Mono"');
   cv=document.createElement('canvas');cv.width=W;cv.height=H;ctx=cv.getContext('2d');document.body.appendChild(cv);return {duration:TOTAL,cues:starts};};
 window.frame=function(t){let i=starts.length-1;while(i>0&&t<starts[i])i--;const s=S.scenes[i],lt=t-starts[i];
